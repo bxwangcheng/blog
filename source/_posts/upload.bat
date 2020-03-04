@@ -1,3 +1,4 @@
+@echo off
 E:
 cd E:/OneDrive/workspace/blog/
 git add source/.
