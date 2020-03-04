@@ -1,5 +1,6 @@
 ---
 title: const 与 define
+date: 2020-02-17 23:26:00
 categories: 
 - 技术
 tags:
@@ -46,8 +47,7 @@ inline int Max(const int& a, const int& b) {
 例如上述代码中，多个`PI`出现的地方，就会出现多个`3.14`
 
 3. `#define`无视作用域，只能`#undef`解除
-  没有C++的封装特性
-
+    没有C++的封装特性
 
 ------
 
