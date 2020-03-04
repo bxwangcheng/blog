@@ -10,7 +10,7 @@ tags:
 
 InnoDB是支持事务的MySQL默认引擎，而MyISAM满足一些特殊需求
 
-![pin.png](https://i.loli.net/2020/03/04/AHYki7WCO4uzrlT.png)
+![pin.png](https://i.loli.net/2020/03/05/zirZNLDkFcSysCX.png)
 
 <!-- more -->
 

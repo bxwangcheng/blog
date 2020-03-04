@@ -8,7 +8,7 @@ tags:
 - nginx
 ---
 
-![未标题-1.png](https://i.loli.net/2020/03/05/rhTvStwn24LA6HD.png)
+![hexo.png](https://i.loli.net/2020/03/05/obwXyBMQJuSrTlZ.png)
 
 <!-- more -->
 
