@@ -1,5 +1,6 @@
 ---
 title: 全排列中的数学方法
+date: 2020-03-03 17:57:06
 categories: 
 - 技术
 tags:

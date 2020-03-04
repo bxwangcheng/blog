@@ -1,5 +1,6 @@
 ---
 title: 设计模式 —— 单例
+date: 2020-03-02 12:20:00
 categories: 
 - 技术
 tags:
