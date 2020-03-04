@@ -7,7 +7,7 @@ tags:
 - C++
 ---
 
-常用的C++11新特性总结
+![c-11.png](https://i.loli.net/2020/03/05/QicG9HtmfTKazYy.png)
 
 <!-- more -->
 
