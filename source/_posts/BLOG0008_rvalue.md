@@ -2,14 +2,20 @@
 title: C++11 —— 右值引用
 date: 2020-02-27 20:29:00
 categories: 
+- 转载
 - 技术
 tags:
 - C++
+- C++11
 ---
 
-C++11——三值与右值引用
+C++11 —— 三值与右值引用
 
 <!-- more -->
+
+------
+
+本文转载 https://www.ibm.com/developerworks/cn/aix/library/1307_lisl_c11/index.html
 
 ## 新特性的目的
 
