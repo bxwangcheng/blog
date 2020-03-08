@@ -50,16 +50,16 @@ tags:
 ```C++
 // union中的成员共用内存地址，起始地址一样
 union Endian {
-    char a; // char大小1字节，占用地址0x100
-    int b; // int大小4字节，占用地址0x100 0x101 0x102 0x103
+    char one_byte; // char大小1字节，占用地址0x100
+    int four_bytes; // int大小4字节，占用地址0x100 0x101 0x102 0x103
 };
 
-// 根据上面的分析，若test.a为0则为大端机器，为1则为小端机器
-Endian test;
-test.b = 1;
+// 根据上面的分析，若one_byte为00000000则为大端机器，为00000001则为小端机器
+Endian local;
+local.four_bytes = 1;
 
-cout << bitset<32>(test.b) << endl;
-cout << bitset<8>(test.a) << endl;
+cout << bitset<32>(local.four_bytes) << endl;
+cout << bitset<8>(local.one_byte) << endl;
 ```
 
 运行结果：
@@ -74,5 +74,4 @@ cout << bitset<8>(test.a) << endl;
 # 参考文献
 
 [1] [理解字节序](URL 'https://www.ruanyifeng.com/blog/2016/11/byte-order.html')
-
 [2] [“字节序”是个什么鬼？](URL 'https://zhuanlan.zhihu.com/p/21388517')
