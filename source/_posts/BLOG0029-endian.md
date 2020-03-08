@@ -7,8 +7,6 @@ tags:
 - 操作系统
 ---
 
-x86ji
-
 多数x86体系计算机的字节序为小端，TCP/IP协议规定的字节序（网络序）为大端
 
 ![未标题-1.png](https://i.loli.net/2020/03/08/7TiNK3P9W8LwYMu.png)
@@ -75,4 +73,6 @@ cout << bitset<8>(test.a) << endl;
 
 # 参考文献
 
-[1] [理解字节序, 阮一峰的网络日志](URL 'https://www.ruanyifeng.com/blog/2016/11/byte-order.html')
+[1] [理解字节序](URL 'https://www.ruanyifeng.com/blog/2016/11/byte-order.html')
+
+[2] [“字节序”是个什么鬼？](URL 'https://zhuanlan.zhihu.com/p/21388517')
