@@ -28,24 +28,18 @@ tags:
 
 ## 原始版本
 
-### 懒汉式 - 线程不安全
+### 懒汉式 - 线程不安全（C++11安全）
 
 ```C++
 class Singleton {
-    static Singleton* _instance;
-    Singleton() {}
-    ~Singleton() {}
-    
+    Singleton() {};
+    Singleton(Singleton const&);
+    void operator=(Singleton const&);
 public:
-    static Singleton* getInstance();
-};
-
-Singleton* Singleton::_instance = nullptr;
-Singleton* Singleton::getInstance() {
-    if (_instance == nullptr) {
-        Singleton::_instance = new Singleton();
+    static Singleton& getInstance() {
+        static Singleton instance;
+        return instance;
     }
-    return _instance;
 }
 ```
 
@@ -94,25 +88,6 @@ Singleton* Singleton::getInstance() {
         Singleton::_instance = new Singleton();
     }
     
-    return _instance;
-}
-```
-
-
-
-### 懒汉式 - C++11之 local static 实现线程安全
-
-```C++
-class Singleton {
-    Singleton() {}
-    ~Singleton() {}
-    
-public:
-    static Singleton* getInstance();
-};
-
-Singleton* Singleton::getInstance() {
-    static Singleton* _instance;
     return _instance;
 }
 ```
