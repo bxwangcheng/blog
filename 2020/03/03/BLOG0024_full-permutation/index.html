@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.verdant.wang","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="字典序法与迭代法解决全排列问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全排列中的数学方法">
+<meta property="og:url" content="http://blog.verdant.wang/2020/03/03/BLOG0024_full-permutation/index.html">
+<meta property="og:site_name" content="珵">
+<meta property="og:description" content="字典序法与迭代法解决全排列问题">
+<meta property="og:image" content="https://i.loli.net/2020/03/03/H74KmTORES9AvbV.png">
+<meta property="article:published_time" content="2020-03-03T09:57:06.000Z">
+<meta property="article:modified_time" content="2020-03-16T19:19:26.247Z">
+<meta property="article:author" content="Wang Cheng">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/03/03/H74KmTORES9AvbV.png">
+
+<link rel="canonical" href="http://blog.verdant.wang/2020/03/03/BLOG0024_full-permutation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>全排列中的数学方法 | 珵</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">珵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://blog.verdant.wang/2020/03/03/BLOG0024_full-permutation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wang Cheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="珵">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          全排列中的数学方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-03 17:57:06" itemprop="dateCreated datePublished" datetime="2020-03-03T17:57:06+08:00">2020-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-17 03:19:26" itemprop="dateModified" datetime="2020-03-17T03:19:26+08:00">2020-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>字典序</strong>法与<strong>迭代</strong>法解决全排列问题</p>
+<p><img src="https://i.loli.net/2020/03/03/H74KmTORES9AvbV.png" alt="0841881c44e2956f6fedf41a0ca46e174e6379a3.png"></p>
+<a id="more"></a>
+
+<hr>
+<h1 id="字典序"><a href="#字典序" class="headerlink" title="字典序"></a>字典序</h1><h2 id="问题1：寻找字典序全排列下的下一个字符串"><a href="#问题1：寻找字典序全排列下的下一个字符串" class="headerlink" title="问题1：寻找字典序全排列下的下一个字符串"></a>问题1：寻找字典序全排列下的下一个字符串</h2><p>定义p是[1,n]的某个全排列中的字符串，p<sub>n</sub>是处于n位置的字符</p>
+<p>p = p<sub>1</sub>p<sub>2</sub>p<sub>3</sub>…p<sub>n </sub></p>
+<p>p = p<sub>1</sub>p<sub>2</sub>…p<sub>j-1</sub>p<sub>j</sub>p<sub>j+1</sub>…p<sub>k-1</sub>p<sub>k</sub>p<sub>k+1</sub>…p<sub>n</sub></p>
+<p>步骤一：从后往前一位一位找，找到第一个开始下降的位置 j - 1</p>
+<p>步骤二：从 j - 1 往后一位一位找，找到最后一个大于 j - 1 位置的数的位置 k</p>
+<p>步骤三：交换 j - 1 和 k 位置的数</p>
+<p>步骤四：从 j 开始到最后位置逆序</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">getNextPermutation</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> N = str.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">int</span> dropIndex = N - <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span> (dropIndex &gt;= <span class="number">0</span> &amp;&amp; str[dropIndex] &gt; str[dropIndex + <span class="number">1</span>]) &#123;</span><br><span class="line">        dropIndex--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> nextCharIndex = dropIndex;</span><br><span class="line">    <span class="keyword">while</span> (nextCharIndex &lt; N &amp;&amp; str[nextCharIndex + <span class="number">1</span>] &gt; str[dropIndex]) &#123;</span><br><span class="line">        nextCharIndex++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">next</span><span class="params">(str)</span></span>;</span><br><span class="line">    swap(next, dropIndex, nextCharIndex);</span><br><span class="line">    reverse(next, dropIndex + <span class="number">1</span>, N);</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="built_in">string</span>&amp; str, <span class="keyword">const</span> <span class="keyword">int</span> a, <span class="keyword">const</span> <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == b) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span> tmp = str[a];</span><br><span class="line">    str[a] = str[b];</span><br><span class="line">    str[b] = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="built_in">string</span>&amp; str, <span class="keyword">const</span> <span class="keyword">int</span> start, <span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">end</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="built_in">end</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> p1 = start;</span><br><span class="line">        <span class="keyword">int</span> p2 = <span class="built_in">end</span> - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (p1 &lt; p2) &#123;</span><br><span class="line">            swap(str, p1++, p2--);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="递归法"><a href="#递归法" class="headerlink" title="递归法"></a>递归法</h1><h2 id="问题2：12345的全排列共有哪些？"><a href="#问题2：12345的全排列共有哪些？" class="headerlink" title="问题2：12345的全排列共有哪些？"></a>问题2：12345的全排列共有哪些？</h2><p>想法：</p>
+<p>1开头的 + 2开头的 + 3开头的 + 4开头的 + 5开头的</p>
+<p>那么：</p>
+<p>1开头的话：2345的全排列怎么求？</p>
+<p>2开头的话：1345的全排列怎么区？</p>
+<p>……</p>
+<h3 id="以此来递归"><a href="#以此来递归" class="headerlink" title="以此来递归"></a>以此来递归</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; result, <span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> == nums.<span class="built_in">size</span>() - <span class="number">1</span>) &#123;</span><br><span class="line">        result.push_back(nums);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="built_in">position</span>; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        swap(nums, <span class="built_in">position</span>, i); <span class="comment">// 尝试以nums[i]开头的情况</span></span><br><span class="line">        <span class="built_in">process</span>(nums, result, <span class="built_in">position</span> + <span class="number">1</span>); <span class="comment">// 下一个位置开始的序列同样进行全排列</span></span><br><span class="line">        swap(nums, <span class="built_in">position</span>, i); <span class="comment">// 尝试完了要还原</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">permute</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</span><br><span class="line">    <span class="built_in">process</span>(nums, result, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="输入序列有重复值怎么办"><a href="#输入序列有重复值怎么办" class="headerlink" title="输入序列有重复值怎么办"></a>输入序列有重复值怎么办</h3><p>若一个数第二次出现，则不与它交换，增加一个判断</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; result, <span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">position</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> == nums.<span class="built_in">size</span>() - <span class="number">1</span>) &#123;</span><br><span class="line">        result.push_back(nums);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="built_in">position</span>; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isRepeat(arr, i, <span class="built_in">position</span>)) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(nums, <span class="built_in">position</span>, i);</span><br><span class="line">        <span class="built_in">process</span>(nums, result, <span class="built_in">position</span> + <span class="number">1</span>);</span><br><span class="line">        swap(nums, <span class="built_in">position</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isRepeat</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">const</span> <span class="keyword">int</span> start, <span class="keyword">const</span> <span class="keyword">int</span> <span class="built_in">end</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; <span class="built_in">end</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] == arr[<span class="built_in">end</span>]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/03/BLOG0023_select_poll_epoll/" rel="prev" title="事件驱动型I/O三连">
+      <i class="fa fa-chevron-left"></i> 事件驱动型I/O三连
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/03/BLOG0025_sizeof/" rel="next" title="sizeof()的一些问题">
+      sizeof()的一些问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#字典序"><span class="nav-number">1.</span> <span class="nav-text">字典序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题1：寻找字典序全排列下的下一个字符串"><span class="nav-number">1.1.</span> <span class="nav-text">问题1：寻找字典序全排列下的下一个字符串</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归法"><span class="nav-number">2.</span> <span class="nav-text">递归法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题2：12345的全排列共有哪些？"><span class="nav-number">2.1.</span> <span class="nav-text">问题2：12345的全排列共有哪些？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以此来递归"><span class="nav-number">2.1.1.</span> <span class="nav-text">以此来递归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入序列有重复值怎么办"><span class="nav-number">2.1.2.</span> <span class="nav-text">输入序列有重复值怎么办</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Wang Cheng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Cheng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
